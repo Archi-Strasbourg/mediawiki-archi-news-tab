@@ -1,0 +1,10 @@
+{
+	"name": "archi-strasbourg/news-tab",
+	"description": "MediaWiki extension that replaces the talk tab with a news tab",
+	"license": "GPL-3.0",
+	"authors": [{
+		"name": "Pierre Rudloff",
+		"email": "contact@rudloff.pro"
+	}],
+	"type": "mediawiki-extension"
+}
