@@ -22,10 +22,7 @@ class NewsTab
             if (isset($mainContent)) {
                 $header = $mainContent->getSection(0)->serialize();
                 preg_match('/{{Infobox adresse(.*)}}/si', $header, $matches);
-                $header = '{{Infobox adresse'.$matches[1].
-                    '|lien = '.$mainTitle->getCanonicalURL().
-                    '}}';
-                $wgOut->addWikiText($header);
+                $wgOut->addWikiText($matches[0]);
             }
         }
     }
