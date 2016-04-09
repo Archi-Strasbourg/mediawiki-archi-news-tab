@@ -10,6 +10,9 @@
 	"Hooks": {
 		"SkinTemplateNavigation": [
 			"NewsTab\\NewsTab::replaceTabs"
+		],
+		"ArticleViewHeader": [
+			"NewsTab\\NewsTab::getInfobox"
 		]
 	},
 	"AutoloadClasses": {
