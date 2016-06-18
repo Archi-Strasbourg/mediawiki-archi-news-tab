@@ -6,9 +6,36 @@ class NewsTab
     public static function replaceTabs($skin, &$links)
     {
         $curTitle = $skin->getTitle();
-        if (in_array($curTitle->getNamespace(), array(NS_ADDRESS, NS_ADDRESS_NEWS))) {
-            $links['namespaces']['adresse_talk']['text'] = 'Actualités';
+        $namespace = $curTitle->getNamespace();
+        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK))) {
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
+            $links['namespaces']['actualités_adresse'] = array(
+                'text'=>'Actualités',
+                'class'=>'',
+                'href'=>$newTitle->getLocalURL()
+            );
         }
+        if ($namespace == NS_ADDRESS_NEWS) {
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
+            $links['namespaces']['actualités_adresse']['text'] = 'Actualités';
+            $links['namespaces'] = array('adresse'=>array(
+                'text'=>'Adresse',
+                'class'=>'',
+                'href'=>$newTitle->getLocalURL()
+            )) + $links['namespaces'];
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
+            $links['namespaces']['adresse_talk'] = array(
+                'text'=>'Discussion',
+                'class'=>'',
+                'href'=>$newTitle->getLocalURL()
+            );
+            unset($links['namespaces']['actualités_adresse_talk']);
+        }
+        $links['namespaces'] = array(
+            'adresse'=>$links['namespaces']['adresse'],
+            'actualités_adresse'=>$links['namespaces']['actualités_adresse'],
+            'adresse_talk'=>$links['namespaces']['adresse_talk']
+        );
     }
 
     public static function getInfobox(&$article)
