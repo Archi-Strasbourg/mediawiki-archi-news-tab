@@ -55,4 +55,32 @@ class NewsTab
             }
         }
     }
+
+    public static function talkpagename($parser, $title = null)
+    {
+        $t = Title::newFromText($title);
+        $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+        return wfEscapeWikiText($newTitle->getPrefixedText());
+    }
+
+    public static function registerMagicWord(&$variableIds)
+    {
+        $variableIds[] = 'newspagename';
+        $variableIds[] = 'newsparentpagename';
+    }
+
+    public static function getMagicWord(&$parser, &$cache, &$magicWordId, &$ret)
+    {
+        if ($magicWordId == 'newspagename') {
+            $t = $parser->getTitle();
+            $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+            $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+        } elseif ($magicWordId == 'newsparentpagename') {
+            $t = $parser->getTitle();
+            $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS);
+            $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+        }
+
+        return true;
+    }
 }

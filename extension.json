@@ -13,9 +13,18 @@
 		],
 		"ArticleViewHeader": [
 			"NewsTab\\NewsTab::getInfobox"
+		],
+		"MagicWordwgVariableIDs": [
+			"NewsTab\\NewsTab::registerMagicWord"
+		],
+		"ParserGetVariableValueSwitch": [
+			"NewsTab\\NewsTab::getMagicWord"
 		]
 	},
 	"AutoloadClasses": {
 		"NewsTab\\NewsTab": "NewsTab.php"
+	},
+	"ExtensionMessagesFiles": {
+		"NewsTabMagic": "NewsTab.i18n.magic.php"
 	}
 }
