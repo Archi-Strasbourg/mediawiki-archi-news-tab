@@ -42,7 +42,7 @@ class NewsTab
     {
         global $wgOut;
         $curTitle = $article->getTitle();
-        $mainTitle = $curTitle->getSubjectPage();
+        $mainTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
         if ($curTitle->getNamespace() == NS_ADDRESS_NEWS) {
             $mainArticle = \Article::newFromTitle($mainTitle, $article->getContext());
             $mainContent = $mainArticle->getPage()->getContent();
