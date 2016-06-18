@@ -31,19 +31,21 @@ class NewsTab
             );
             unset($links['namespaces']['actualités_adresse_talk']);
         }
-        $links['namespaces'] = array(
-            'adresse'=>$links['namespaces']['adresse'],
-            'actualités_adresse'=>$links['namespaces']['actualités_adresse'],
-            'adresse_talk'=>$links['namespaces']['adresse_talk']
-        );
+        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK, NS_ADDRESS_NEWS))) {
+            $links['namespaces'] = array(
+                'adresse'=>$links['namespaces']['adresse'],
+                'actualités_adresse'=>$links['namespaces']['actualités_adresse'],
+                'adresse_talk'=>$links['namespaces']['adresse_talk']
+            );
+        }
     }
 
     public static function getInfobox(&$article)
     {
         global $wgOut;
         $curTitle = $article->getTitle();
-        $mainTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
         if ($curTitle->getNamespace() == NS_ADDRESS_NEWS) {
+            $mainTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $mainArticle = \Article::newFromTitle($mainTitle, $article->getContext());
             $mainContent = $mainArticle->getPage()->getContent();
             if (isset($mainContent)) {
