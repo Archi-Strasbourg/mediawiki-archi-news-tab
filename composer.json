@@ -1,5 +1,5 @@
 {
-	"name": "archi-strasbourg/news-tab",
+	"name": "archi-strasbourg/archi-news-tab",
 	"description": "MediaWiki extension that replaces the talk tab with a news tab",
 	"license": "GPL-3.0",
 	"authors": [{

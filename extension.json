@@ -1,30 +1,30 @@
 {
-	"name": "NewsTab",
+	"name": "ArchiNewsTab",
 	"author": "Pierre Rudloff",
-	"url": "https://github.com/Archi-Strasbourg/mediawiki-news-tab",
-	"description": "https://github.com/Archi-Strasbourg/mediawiki-news-tab",
+	"url": "https://github.com/Archi-Strasbourg/mediawiki-archi-news-tab",
+	"description": "MediaWiki extension that replaces the talk tab with a news tab",
 	"version": "0.1.0",
 	"license-name": "GPL-3.0",
 	"type": "skin",
 	"manifest_version": 1,
 	"Hooks": {
 		"SkinTemplateNavigation": [
-			"NewsTab\\NewsTab::replaceTabs"
+			"ArchiNewsTab\\ArchiNewsTab::replaceTabs"
 		],
 		"ArticleViewHeader": [
-			"NewsTab\\NewsTab::getInfobox"
+			"ArchiNewsTab\\ArchiNewsTab::getInfobox"
 		],
 		"MagicWordwgVariableIDs": [
-			"NewsTab\\NewsTab::registerMagicWord"
+			"ArchiNewsTab\\ArchiNewsTab::registerMagicWord"
 		],
 		"ParserGetVariableValueSwitch": [
-			"NewsTab\\NewsTab::getMagicWord"
+			"ArchiNewsTab\\ArchiNewsTab::getMagicWord"
 		]
 	},
 	"AutoloadClasses": {
-		"NewsTab\\NewsTab": "NewsTab.php"
+		"ArchiNewsTab\\ArchiNewsTab": "ArchiNewsTab.php"
 	},
 	"ExtensionMessagesFiles": {
-		"NewsTabMagic": "NewsTab.i18n.magic.php"
+		"ArchiNewsTabMagic": "ArchiNewsTab.i18n.magic.php"
 	}
 }

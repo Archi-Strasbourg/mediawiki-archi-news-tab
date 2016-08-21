@@ -1,7 +1,7 @@
 <?php
-namespace NewsTab;
+namespace ArchiNewsTab;
 
-class NewsTab
+class ArchiNewsTab
 {
     public static function replaceTabs($skin, &$links)
     {
