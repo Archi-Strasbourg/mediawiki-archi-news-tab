@@ -1,8 +1,8 @@
 <?php
 
-$magicWords = array();
+$magicWords = [];
 
-$magicWords['en'] = array(
-    'newspagename' => array( 0, 'NEWSPAGENAME' ),
-    'newsparentpagename' => array( 0, 'NEWSPARENTPAGENAME' ),
-);
+$magicWords['en'] = [
+    'newspagename'       => [0, 'NEWSPAGENAME'],
+    'newsparentpagename' => [0, 'NEWSPARENTPAGENAME'],
+];
