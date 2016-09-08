@@ -1,4 +1,5 @@
 <?php
+
 namespace ArchiNewsTab;
 
 class ArchiNewsTab
@@ -7,36 +8,36 @@ class ArchiNewsTab
     {
         $curTitle = $skin->getTitle();
         $namespace = $curTitle->getNamespace();
-        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK))) {
+        if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK])) {
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
-            $links['namespaces']['actualités_adresse'] = array(
-                'text'=>'Actualités',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            );
+            $links['namespaces']['actualités_adresse'] = [
+                'text'  => 'Actualités',
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ];
         }
         if ($namespace == NS_ADDRESS_NEWS) {
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $links['namespaces']['actualités_adresse']['text'] = 'Actualités';
-            $links['namespaces'] = array('adresse'=>array(
-                'text'=>'Adresse',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            )) + $links['namespaces'];
+            $links['namespaces'] = ['adresse' => [
+                'text'  => 'Adresse',
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ]] + $links['namespaces'];
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
-            $links['namespaces']['adresse_talk'] = array(
-                'text'=>'Discussion',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            );
+            $links['namespaces']['adresse_talk'] = [
+                'text'  => 'Discussion',
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ];
             unset($links['namespaces']['actualités_adresse_talk']);
         }
-        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK, NS_ADDRESS_NEWS))) {
-            $links['namespaces'] = array(
-                'adresse'=>$links['namespaces']['adresse'],
-                'actualités_adresse'=>$links['namespaces']['actualités_adresse'],
-                'adresse_talk'=>$links['namespaces']['adresse_talk']
-            );
+        if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK, NS_ADDRESS_NEWS])) {
+            $links['namespaces'] = [
+                'adresse'            => $links['namespaces']['adresse'],
+                'actualités_adresse' => $links['namespaces']['actualités_adresse'],
+                'adresse_talk'       => $links['namespaces']['adresse_talk'],
+            ];
         }
     }
 
@@ -60,6 +61,7 @@ class ArchiNewsTab
     {
         $t = Title::newFromText($title);
         $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+
         return wfEscapeWikiText($newTitle->getPrefixedText());
     }
 
