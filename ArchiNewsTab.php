@@ -6,7 +6,6 @@ use SectionsCount\SectionsCount;
 
 class ArchiNewsTab
 {
-
     private static function getNewsTabTitle(\Title $title)
     {
         global $wgParser;
