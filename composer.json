@@ -6,5 +6,8 @@
 		"name": "Pierre Rudloff",
 		"email": "contact@rudloff.pro"
 	}],
-	"type": "mediawiki-extension"
+	"type": "mediawiki-extension",
+	"require": {
+		"archi-strasbourg/sections-count": "~0.1.0"
+	}
 }

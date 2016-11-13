@@ -2,23 +2,42 @@
 
 namespace ArchiNewsTab;
 
+use SectionsCount\SectionsCount;
+
 class ArchiNewsTab
 {
+
+    private static function getNewsTabTitle(\Title $title)
+    {
+        global $wgParser;
+        $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText()) - 1;
+        if (isset($nbNews) && $nbNews > 0) {
+            if ($nbNews == 1) {
+                return $nbNews.' actualité';
+            } else {
+                return $nbNews.' actualités';
+            }
+        } else {
+            return 'Actualités';
+        }
+    }
+
     public static function replaceTabs($skin, &$links)
     {
         $curTitle = $skin->getTitle();
         $namespace = $curTitle->getNamespace();
         if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK])) {
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
+
             $links['namespaces']['actualités_adresse'] = [
-                'text'  => 'Actualités',
+                'text'  => self::getNewsTabTitle($newTitle),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ];
         }
         if ($namespace == NS_ADDRESS_NEWS) {
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
-            $links['namespaces']['actualités_adresse']['text'] = 'Actualités';
+            $links['namespaces']['actualités_adresse']['text'] = self::getNewsTabTitle($curTitle);
             $links['namespaces'] = ['adresse' => [
                 'text'  => 'Adresse',
                 'class' => '',

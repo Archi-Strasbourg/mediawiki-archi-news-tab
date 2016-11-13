@@ -1,0 +1,55 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "dca18379938684a3afa33e319a45b703",
+    "content-hash": "6a2ecdd2714e4576dcf5e8f60e2a3b26",
+    "packages": [
+        {
+            "name": "archi-strasbourg/sections-count",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Archi-Strasbourg/mediawiki-sections-count.git",
+                "reference": "6faf173187937ad0e434ef1149d17a40624c8d80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Archi-Strasbourg/mediawiki-sections-count/zipball/6faf173187937ad0e434ef1149d17a40624c8d80",
+                "reference": "6faf173187937ad0e434ef1149d17a40624c8d80",
+                "shasum": ""
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.5",
+                "phpunit/phpunit": "~5.6.1",
+                "squizlabs/php_codesniffer": "~2.7.0",
+                "symfony/var-dumper": "~3.1.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre Rudloff",
+                    "email": "contact@rudloff.pro",
+                    "homepage": "https://rudloff.pro/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "MediaWiki magic word that displays the number of sections in a page",
+            "time": "2016-10-08 15:16:40"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
