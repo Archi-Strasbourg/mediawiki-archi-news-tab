@@ -1,19 +1,22 @@
 <?php
 /**
- * ArchiNewsTab class
+ * ArchiNewsTab class.
  */
+
 namespace ArchiNewsTab;
 
 use SectionsCount\SectionsCount;
 
 /**
- * Add a custom news tab on top of every address page
+ * Add a custom news tab on top of every address page.
  */
 class ArchiNewsTab
 {
     /**
-     * Get the title of the new tab
-     * @param  Title  $title Title of the current article
+     * Get the title of the new tab.
+     *
+     * @param Title $title Title of the current article
+     *
      * @return string
      */
     private static function getNewsTabTitle(\Title $title)
@@ -32,9 +35,11 @@ class ArchiNewsTab
     }
 
     /**
-     * Replace tabs with custom tab
-     * @param  \Skin $skin  Current skin
-     * @param  array $links Tab links
+     * Replace tabs with custom tab.
+     *
+     * @param \Skin $skin  Current skin
+     * @param array $links Tab links
+     *
      * @return void
      */
     public static function replaceTabs(\Skin $skin, &$links)
@@ -76,8 +81,10 @@ class ArchiNewsTab
     }
 
     /**
-     * Extract and output the infobox from an address article
-     * @param  \Article $article Article to extract the infobox from
+     * Extract and output the infobox from an address article.
+     *
+     * @param \Article $article Article to extract the infobox from
+     *
      * @return void
      */
     public static function getInfobox(\Article &$article)
@@ -97,9 +104,11 @@ class ArchiNewsTab
     }
 
     /**
-     * Customize the link to talk pages
-     * @param  \Parser $parser MediaWiki parser
-     * @param  string $title  Current page title
+     * Customize the link to talk pages.
+     *
+     * @param \Parser $parser MediaWiki parser
+     * @param string  $title  Current page title
+     *
      * @return string
      */
     public static function talkpagename(\Parser $parser, $title = null)
@@ -111,8 +120,10 @@ class ArchiNewsTab
     }
 
     /**
-     * Register new magic words
-     * @param  array $variableIds Existing magic word IDs
+     * Register new magic words.
+     *
+     * @param array $variableIds Existing magic word IDs
+     *
      * @return void
      */
     public static function registerMagicWord(&$variableIds)
@@ -122,11 +133,13 @@ class ArchiNewsTab
     }
 
     /**
-     * Parse a magic word and return the result
-     * @param  \Parser $parser     MediaWiki parser
-     * @param  array $cache
-     * @param  string $magicWordId Magic word ID (newspagename or newsparentpagename)
-     * @param  string $ret         Returned text
+     * Parse a magic word and return the result.
+     *
+     * @param \Parser $parser      MediaWiki parser
+     * @param array   $cache
+     * @param string  $magicWordId Magic word ID (newspagename or newsparentpagename)
+     * @param string  $ret         Returned text
+     *
      * @return bool Always true
      */
     public static function getMagicWord(\Parser &$parser, &$cache, &$magicWordId, &$ret)
