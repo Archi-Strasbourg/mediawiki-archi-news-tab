@@ -9,5 +9,11 @@
 	"type": "mediawiki-extension",
 	"require": {
 		"archi-strasbourg/sections-count": "~0.1.0"
-	}
+	},
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "~2.9.0"
+    },
+    "scripts": {
+        "doc": "./vendor/bin/phpdoc -f ArchiNewsTab.php -t docs"
+    }
 }
