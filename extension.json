@@ -26,5 +26,10 @@
 	},
 	"ExtensionMessagesFiles": {
 		"ArchiNewsTabMagic": "ArchiNewsTab.i18n.magic.php"
-	}
+	},
+	"MessagesDirs": {
+    	"ArchiHome": [
+      		"i18n"
+    	]
+  	}
 }

@@ -25,12 +25,12 @@ class ArchiNewsTab
         $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText()) - 1;
         if (isset($nbNews) && $nbNews > 0) {
             if ($nbNews == 1) {
-                return $nbNews.' actualité';
+                return $nbNews.' '.wfMessage('news-single')->parse();
             } else {
-                return $nbNews.' actualités';
+                return $nbNews.' '.wfMessage('news')->parse();
             }
         } else {
-            return 'Actualités';
+            return wfMessage('tab-name')->parse();
         }
     }
 
@@ -59,13 +59,13 @@ class ArchiNewsTab
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $links['namespaces']['actualités_adresse']['text'] = self::getNewsTabTitle($curTitle);
             $links['namespaces'] = ['adresse' => [
-                'text'  => 'Adresse',
+                'text'  => wfMessage('address-tab')->parse(),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ]] + $links['namespaces'];
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
             $links['namespaces']['adresse_talk'] = [
-                'text'  => 'Discussion',
+                'text'  => wfMessage('talk-tab')->parse(),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ];
