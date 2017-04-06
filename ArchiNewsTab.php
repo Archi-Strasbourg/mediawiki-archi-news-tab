@@ -59,13 +59,13 @@ class ArchiNewsTab
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $links['namespaces']['actualités_adresse']['text'] = self::getNewsTabTitle($curTitle);
             $links['namespaces'] = ['adresse' => [
-                'text'  => wfMessage('address-tab')->parse(),
+                'text'  => wfMessage('nstab-adresse')->parse(),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ]] + $links['namespaces'];
             $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
             $links['namespaces']['adresse_talk'] = [
-                'text'  => wfMessage('talk-tab')->parse(),
+                'text'  => wfMessage('nstab-adresse_talk')->parse(),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ];

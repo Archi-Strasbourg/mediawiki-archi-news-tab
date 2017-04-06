@@ -2,6 +2,6 @@
     "tab-name": "News",
     "news-single": "news",
     "news": "news",
-    "address-tab": "Address",
-    "talk-tab": "Talk"
+    "nstab-adresse": "Address",
+    "nstab-adresse_talk": "Talk"
 }
