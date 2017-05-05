@@ -22,7 +22,7 @@ class ArchiNewsTab
     private static function getNewsTabTitle(\Title $title)
     {
         global $wgParser;
-        $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText()) - 1;
+        $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText());
         if (isset($nbNews) && $nbNews > 0) {
             if ($nbNews == 1) {
                 return $nbNews.' '.wfMessage('news-single')->parse();
