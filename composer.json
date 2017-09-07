@@ -10,7 +10,7 @@
   ],
   "type": "mediawiki-extension",
   "require": {
-    "archi-strasbourg/sections-count": "~0.1.0"
+    "archi-strasbourg/sections-count": "^1.0.0"
   },
   "require-dev": {
     "phpdocumentor/phpdocumentor": "~2.9.0"
