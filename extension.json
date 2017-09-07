@@ -3,7 +3,7 @@
 	"author": "Pierre Rudloff",
 	"url": "https://github.com/Archi-Strasbourg/mediawiki-archi-news-tab",
 	"description": "MediaWiki extension that replaces the talk tab with a news tab",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"license-name": "GPL-3.0",
 	"type": "skin",
 	"manifest_version": 1,
@@ -26,5 +26,10 @@
 	},
 	"ExtensionMessagesFiles": {
 		"ArchiNewsTabMagic": "ArchiNewsTab.i18n.magic.php"
-	}
+	},
+	"MessagesDirs": {
+    	"ArchiHome": [
+      		"i18n"
+    	]
+  	}
 }

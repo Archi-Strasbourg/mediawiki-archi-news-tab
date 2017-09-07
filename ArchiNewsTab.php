@@ -1,46 +1,93 @@
 <?php
+/**
+ * ArchiNewsTab class.
+ */
+
 namespace ArchiNewsTab;
 
+use SectionsCount\SectionsCount;
+
+/**
+ * Add a custom news tab on top of every address page.
+ */
 class ArchiNewsTab
 {
-    public static function replaceTabs($skin, &$links)
+    /**
+     * Get the title of the new tab.
+     *
+     * @param Title $title Title of the current article
+     *
+     * @return string
+     */
+    private static function getNewsTabTitle(\Title $title)
     {
-        $curTitle = $skin->getTitle();
-        $namespace = $curTitle->getNamespace();
-        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK))) {
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
-            $links['namespaces']['actualités_adresse'] = array(
-                'text'=>'Actualités',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            );
-        }
-        if ($namespace == NS_ADDRESS_NEWS) {
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
-            $links['namespaces']['actualités_adresse']['text'] = 'Actualités';
-            $links['namespaces'] = array('adresse'=>array(
-                'text'=>'Adresse',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            )) + $links['namespaces'];
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
-            $links['namespaces']['adresse_talk'] = array(
-                'text'=>'Discussion',
-                'class'=>'',
-                'href'=>$newTitle->getLocalURL()
-            );
-            unset($links['namespaces']['actualités_adresse_talk']);
-        }
-        if (in_array($namespace, array(NS_ADDRESS, NS_ADDRESS_TALK, NS_ADDRESS_NEWS))) {
-            $links['namespaces'] = array(
-                'adresse'=>$links['namespaces']['adresse'],
-                'actualités_adresse'=>$links['namespaces']['actualités_adresse'],
-                'adresse_talk'=>$links['namespaces']['adresse_talk']
-            );
+        global $wgParser;
+        $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText());
+        if (isset($nbNews) && $nbNews > 0) {
+            if ($nbNews == 1) {
+                return $nbNews.' '.wfMessage('news-single')->parse();
+            } else {
+                return $nbNews.' '.wfMessage('news')->parse();
+            }
+        } else {
+            return wfMessage('tab-name')->parse();
         }
     }
 
-    public static function getInfobox(&$article)
+    /**
+     * Replace tabs with custom tab.
+     *
+     * @param \Skin $skin  Current skin
+     * @param array $links Tab links
+     *
+     * @return void
+     */
+    public static function replaceTabs(\Skin $skin, &$links)
+    {
+        $curTitle = $skin->getTitle();
+        $namespace = $curTitle->getNamespace();
+        if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK])) {
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
+
+            $links['namespaces']['actualités_adresse'] = [
+                'text'  => self::getNewsTabTitle($newTitle),
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ];
+        }
+        if ($namespace == NS_ADDRESS_NEWS) {
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
+            $links['namespaces']['actualités_adresse']['text'] = self::getNewsTabTitle($curTitle);
+            $links['namespaces'] = ['adresse' => [
+                'text'  => wfMessage('nstab-adresse')->parse(),
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ]] + $links['namespaces'];
+            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
+            $links['namespaces']['adresse_talk'] = [
+                'text'  => wfMessage('nstab-adresse_talk')->parse(),
+                'class' => '',
+                'href'  => $newTitle->getLocalURL(),
+            ];
+            unset($links['namespaces']['actualités_adresse_talk']);
+        }
+        if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK, NS_ADDRESS_NEWS])) {
+            $links['namespaces'] = [
+                'adresse'            => $links['namespaces']['adresse'],
+                'actualités_adresse' => $links['namespaces']['actualités_adresse'],
+                'adresse_talk'       => $links['namespaces']['adresse_talk'],
+            ];
+        }
+    }
+
+    /**
+     * Extract and output the infobox from an address article.
+     *
+     * @param \Article $article Article to extract the infobox from
+     *
+     * @return void
+     */
+    public static function getInfobox(\Article &$article)
     {
         global $wgOut;
         $curTitle = $article->getTitle();
@@ -56,20 +103,46 @@ class ArchiNewsTab
         }
     }
 
-    public static function talkpagename($parser, $title = null)
+    /**
+     * Customize the link to talk pages.
+     *
+     * @param \Parser $parser MediaWiki parser
+     * @param string  $title  Current page title
+     *
+     * @return string
+     */
+    public static function talkpagename(\Parser $parser, $title = null)
     {
         $t = Title::newFromText($title);
         $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+
         return wfEscapeWikiText($newTitle->getPrefixedText());
     }
 
+    /**
+     * Register new magic words.
+     *
+     * @param array $variableIds Existing magic word IDs
+     *
+     * @return void
+     */
     public static function registerMagicWord(&$variableIds)
     {
         $variableIds[] = 'newspagename';
         $variableIds[] = 'newsparentpagename';
     }
 
-    public static function getMagicWord(&$parser, &$cache, &$magicWordId, &$ret)
+    /**
+     * Parse a magic word and return the result.
+     *
+     * @param \Parser $parser      MediaWiki parser
+     * @param array   $cache
+     * @param string  $magicWordId Magic word ID (newspagename or newsparentpagename)
+     * @param string  $ret         Returned text
+     *
+     * @return bool Always true
+     */
+    public static function getMagicWord(\Parser &$parser, &$cache, &$magicWordId, &$ret)
     {
         if ($magicWordId == 'newspagename') {
             $t = $parser->getTitle();
