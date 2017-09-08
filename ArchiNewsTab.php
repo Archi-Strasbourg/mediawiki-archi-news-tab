@@ -89,13 +89,17 @@ class ArchiNewsTab
      */
     public static function getInfobox(\Article &$article)
     {
-        global $wgOut;
+        global $wgOut, $wgScriptPath;
         $curTitle = $article->getTitle();
         if ($curTitle->getNamespace() == NS_ADDRESS_NEWS) {
             $mainTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $mainArticle = \Article::newFromTitle($mainTitle, $article->getContext());
             $mainContent = $mainArticle->getPage()->getContent();
             if (isset($mainContent)) {
+                $wgOut->addStyle($wgScriptPath.'/extensions/Maps/includes/services/Leaflet/leaflet/leaflet.css');
+                $wgOut->addScriptFile($wgScriptPath.'/extensions/Maps/includes/services/Leaflet/leaflet/leaflet.js');
+                $wgOut->addModules('ext.maps.leaflet');
+                $wgOut->addModules('ext.sm.fi.leafletajax');
                 $header = $mainContent->getSection(0)->serialize();
                 preg_match('/{{Infobox adresse(.*)}}/si', $header, $matches);
                 $wgOut->addWikiText($matches[0]);
