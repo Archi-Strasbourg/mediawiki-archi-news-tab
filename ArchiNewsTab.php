@@ -102,7 +102,7 @@ class ArchiNewsTab
                 $wgOut->addModules('ext.sm.fi.leafletajax');
                 $header = $mainContent->getSection(0)->serialize();
                 preg_match('/{{Infobox adresse(.*)}}/si', $header, $matches);
-                $wgOut->addWikiText($matches[0]);
+                $wgOut->addWikiText($matches[0], true, false);
             }
         }
     }
