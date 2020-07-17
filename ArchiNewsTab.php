@@ -5,7 +5,12 @@
 
 namespace ArchiNewsTab;
 
+use Article;
+use MWException;
+use Parser;
 use SectionsCount\SectionsCount;
+use Skin;
+use Title;
 
 /**
  * Add a custom news tab on top of every address page.
@@ -18,8 +23,9 @@ class ArchiNewsTab
      * @param Title $title Title of the current article
      *
      * @return string
+     * @throws MWException
      */
-    private static function getNewsTabTitle(\Title $title)
+    private static function getNewsTabTitle(Title $title)
     {
         global $wgParser;
         $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText());
@@ -37,17 +43,18 @@ class ArchiNewsTab
     /**
      * Replace tabs with custom tab.
      *
-     * @param \Skin $skin  Current skin
+     * @param Skin $skin Current skin
      * @param array $links Tab links
      *
      * @return void
+     * @throws MWException
      */
-    public static function replaceTabs(\Skin $skin, &$links)
+    public static function replaceTabs(Skin $skin, &$links)
     {
         $curTitle = $skin->getTitle();
         $namespace = $curTitle->getNamespace();
         if (in_array($namespace, [NS_ADDRESS, NS_ADDRESS_TALK])) {
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
+            $newTitle = Title::newFromText($curTitle->getText(), NS_ADDRESS_NEWS);
 
             $links['namespaces']['actualités_adresse'] = [
                 'text'  => self::getNewsTabTitle($newTitle),
@@ -56,14 +63,14 @@ class ArchiNewsTab
             ];
         }
         if ($namespace == NS_ADDRESS_NEWS) {
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
+            $newTitle = Title::newFromText($curTitle->getText(), NS_ADDRESS);
             $links['namespaces']['actualités_adresse']['text'] = self::getNewsTabTitle($curTitle);
             $links['namespaces'] = ['adresse' => [
                 'text'  => wfMessage('nstab-adresse')->parse(),
                 'class' => '',
                 'href'  => $newTitle->getLocalURL(),
             ]] + $links['namespaces'];
-            $newTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
+            $newTitle = Title::newFromText($curTitle->getText(), NS_ADDRESS_TALK);
             $links['namespaces']['adresse_talk'] = [
                 'text'  => wfMessage('nstab-adresse_talk')->parse(),
                 'class' => '',
@@ -83,17 +90,18 @@ class ArchiNewsTab
     /**
      * Extract and output the infobox from an address article.
      *
-     * @param \Article $article Article to extract the infobox from
+     * @param Article $article Article to extract the infobox from
      *
      * @return void
+     * @throws MWException
      */
-    public static function getInfobox(\Article &$article)
+    public static function getInfobox(Article &$article)
     {
         global $wgOut, $wgScriptPath;
         $curTitle = $article->getTitle();
         if ($curTitle->getNamespace() == NS_ADDRESS_NEWS) {
-            $mainTitle = \Title::newFromText($curTitle->getText(), NS_ADDRESS);
-            $mainArticle = \Article::newFromTitle($mainTitle, $article->getContext());
+            $mainTitle = Title::newFromText($curTitle->getText(), NS_ADDRESS);
+            $mainArticle = Article::newFromTitle($mainTitle, $article->getContext());
             $mainContent = $mainArticle->getPage()->getContent();
             if (isset($mainContent)) {
                 $wgOut->addStyle($wgScriptPath.'/extensions/Maps/includes/services/Leaflet/leaflet/leaflet.css');
@@ -110,15 +118,15 @@ class ArchiNewsTab
     /**
      * Customize the link to talk pages.
      *
-     * @param \Parser $parser MediaWiki parser
+     * @param Parser $parser MediaWiki parser
      * @param string  $title  Current page title
      *
      * @return string
      */
-    public static function talkpagename(\Parser $parser, $title = null)
+    public static function talkpagename(Parser $parser, $title = null)
     {
         $t = Title::newFromText($title);
-        $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+        $newTitle = Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
 
         return wfEscapeWikiText($newTitle->getPrefixedText());
     }
@@ -139,22 +147,22 @@ class ArchiNewsTab
     /**
      * Parse a magic word and return the result.
      *
-     * @param \Parser $parser      MediaWiki parser
+     * @param Parser $parser      MediaWiki parser
      * @param array   $cache
      * @param string  $magicWordId Magic word ID (newspagename or newsparentpagename)
      * @param string  $ret         Returned text
      *
      * @return bool Always true
      */
-    public static function getMagicWord(\Parser &$parser, &$cache, &$magicWordId, &$ret)
+    public static function getMagicWord(Parser &$parser, &$cache, &$magicWordId, &$ret)
     {
         if ($magicWordId == 'newspagename') {
             $t = $parser->getTitle();
-            $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+            $newTitle = Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
             $ret = wfEscapeWikiText($newTitle->getPrefixedText());
         } elseif ($magicWordId == 'newsparentpagename') {
             $t = $parser->getTitle();
-            $newTitle = \Title::newFromText($t->getText(), NS_ADDRESS);
+            $newTitle = Title::newFromText($t->getText(), NS_ADDRESS);
             $ret = wfEscapeWikiText($newTitle->getPrefixedText());
         }
 
