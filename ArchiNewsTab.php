@@ -6,6 +6,7 @@
 namespace ArchiNewsTab;
 
 use Article;
+use MediaWiki\MediaWikiServices;
 use MWException;
 use Parser;
 use SectionsCount\SectionsCount;
@@ -25,10 +26,9 @@ class ArchiNewsTab
      * @return string
      * @throws MWException
      */
-    private static function getNewsTabTitle(Title $title)
+    private static function getNewsTabTitle(Title $title): string
     {
-        global $wgParser;
-        $nbNews = SectionsCount::sectionscount($wgParser, $title->getFullText());
+        $nbNews = SectionsCount::sectionscount(MediaWikiServices::getInstance()->getParser(), $title->getFullText());
         if (isset($nbNews) && $nbNews > 0) {
             if ($nbNews == 1) {
                 return $nbNews.' '.wfMessage('news-single')->parse();
