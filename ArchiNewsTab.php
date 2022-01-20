@@ -8,6 +8,7 @@ namespace ArchiNewsTab;
 use Article;
 use MediaWiki\MediaWikiServices;
 use MWException;
+use OutputPage;
 use Parser;
 use SectionsCount\SectionsCount;
 use Skin;
@@ -98,6 +99,8 @@ class ArchiNewsTab
     public static function getInfobox(Article &$article)
     {
         global $wgOut, $wgScriptPath;
+        /** @var OutputPage $wgOut */
+
         $curTitle = $article->getTitle();
         if ($curTitle->getNamespace() == NS_ADDRESS_NEWS) {
             $mainTitle = Title::newFromText($curTitle->getText(), NS_ADDRESS);
@@ -111,7 +114,7 @@ class ArchiNewsTab
                 $header = $mainContent->getSection(0)->serialize();
                 preg_match('/{{Infobox adresse(.*)}}/si', $header, $matches);
                 if (isset($matches[0])) {
-                    $wgOut->addWikiTextAsContent($matches[0], true);
+                    $wgOut->addWikiTextAsContent($matches[0], true, $mainTitle);
                 }
             }
         }
