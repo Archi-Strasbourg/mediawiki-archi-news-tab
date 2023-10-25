@@ -8,7 +8,7 @@
   "type": "skin",
   "manifest_version": 1,
   "Hooks": {
-    "SkinTemplateNavigation": [
+    "SkinTemplateNavigation::Universal": [
       "ArchiNewsTab\\ArchiNewsTab::replaceTabs"
     ],
     "ArticleViewHeader": [
