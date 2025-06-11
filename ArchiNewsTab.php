@@ -95,8 +95,9 @@ class ArchiNewsTab
      *
      * @return void
      * @throws MWException
+     * @noinspection PhpUnused
      */
-    public static function getInfobox(Article &$article)
+    public static function getInfobox(Article $article): void
     {
         global $wgOut, $wgScriptPath;
         /** @var OutputPage $wgOut */
@@ -114,7 +115,13 @@ class ArchiNewsTab
                 $header = $mainContent->getSection(0)->serialize();
                 preg_match('/{{Infobox adresse(.*)}}/si', $header, $matches);
                 if (isset($matches[0])) {
-                    $wgOut->addWikiTextAsContent($matches[0], true, $mainTitle);
+                    /*
+                     * On passe un paramètre au modèle
+                     * pour savoir qu'on est sur les actualités
+                     * (vu que le rendu se fait dans le contexte de l'adresse).
+                     */
+                    $infobox = str_replace('}}', '|news=yes}}', $matches[0]);
+                    $wgOut->addWikiTextAsContent($infobox, true, $mainTitle);
                 }
             }
         }
