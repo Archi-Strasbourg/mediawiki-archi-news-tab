@@ -159,23 +159,25 @@ class ArchiNewsTab
     /**
      * Parse a magic word and return the result.
      *
-     * @param Parser $parser      MediaWiki parser
-     * @param array   $cache
-     * @param string  $magicWordId Magic word ID (newspagename or newsparentpagename)
-     * @param string  $ret         Returned text
+     * @param Parser $parser MediaWiki parser
+     * @param array $cache
+     * @param string $magicWordId Magic word ID (newspagename or newsparentpagename)
+     * @param string|null $ret Returned text
      *
      * @return bool Always true
+     * @noinspection PhpUnusedParameterInspection
+     * @noinspection PhpUnused
      */
-    public static function getMagicWord(Parser &$parser, &$cache, &$magicWordId, &$ret)
-    {
-        if ($magicWordId == 'newspagename') {
-            $t = $parser->getTitle();
-            $newTitle = Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
-            $ret = wfEscapeWikiText($newTitle->getPrefixedText());
-        } elseif ($magicWordId == 'newsparentpagename') {
-            $t = $parser->getTitle();
-            $newTitle = Title::newFromText($t->getText(), NS_ADDRESS);
-            $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+    public static function getMagicWord(Parser $parser, array &$cache, string $magicWordId, ?string &$ret): bool {
+        $t = $parser->getPage();
+        if ($t instanceof Title) {
+            if ($magicWordId == 'newspagename') {
+                $newTitle = Title::newFromText($t->getText(), NS_ADDRESS_NEWS);
+                $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+            } elseif ($magicWordId == 'newsparentpagename') {
+                $newTitle = Title::newFromText($t->getText(), NS_ADDRESS);
+                $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+            }
         }
 
         return true;
