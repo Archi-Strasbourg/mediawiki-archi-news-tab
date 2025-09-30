@@ -149,11 +149,12 @@ class ArchiNewsTab
      * @param array $variableIds Existing magic word IDs
      *
      * @return void
+     * @noinspection PhpUnused
      */
-    public static function registerMagicWord(&$variableIds)
-    {
+    public static function registerMagicWord(array &$variableIds): void {
         $variableIds[] = 'newspagename';
         $variableIds[] = 'newsparentpagename';
+        $variableIds[] = 'newsparentpageurl';
     }
 
     /**
@@ -177,6 +178,9 @@ class ArchiNewsTab
             } elseif ($magicWordId == 'newsparentpagename') {
                 $newTitle = Title::newFromText($t->getText(), NS_ADDRESS);
                 $ret = wfEscapeWikiText($newTitle->getPrefixedText());
+            } elseif ($magicWordId == 'newsparentpageurl') {
+                $newTitle = Title::newFromText($t->getText(), NS_ADDRESS);
+                $ret = $newTitle->getFullURL();
             }
         }
 
